@@ -844,8 +844,8 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
     <div class="hero-tag"><div class="ping"></div>BTech CSE · 2024–2028</div>
     <h1>
       <div class="line"><span>Game Dev</span></div>
-      <div class="line"><span class="grad-text">&amp; Designer</span></div>
-      <div class="line"><span>Creator</span></div>
+      <div class="line"><span class="grad-text">&amp; Graphic</span></div>
+      <div class="line"><span class="grad-text">Designer</span></div>
     </h1>
     <p class="hero-desc">Game Developer · UI/UX Designer · 3D Artist · Video Editor. I build worlds, craft interfaces, and tell stories through pixels and code.</p>
     <div class="hero-cta">
@@ -1337,6 +1337,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
         <button class="h-tab" onclick="setHarmony('analogous')">Analogous</button>
         <button class="h-tab" onclick="setHarmony('split')">Split-Comp</button>
         <button class="h-tab" onclick="setHarmony('tetradic')">Tetradic</button>
+        <button class="h-tab" onclick="setHarmony('monochromatic')">Monochromatic</button>
       </div>
       <div class="harmony-swatches" id="harmonySwatch"></div>
       <div class="harmony-desc" id="harmonyDesc">Click on the color wheel to get started. The harmony lines will appear on the wheel.</div>
@@ -2727,6 +2728,7 @@ const HARMONY_INFO={
   analogous:{offsets:[-30,30],desc:'Three colors adjacent on the wheel (±30°). Creates harmonious, natural-feeling palettes. Low contrast — better for backgrounds than CTAs.',label:['Base','Analogous −','Analogous +']},
   split:{offsets:[150,210],desc:'Complement of each side of the base color. Softer than complementary — still has contrast but with more variety.',label:['Base','Split 1','Split 2']},
   tetradic:{offsets:[90,180,270],desc:'Four colors forming a rectangle on the wheel. Rich variety but hard to balance. Use one color as dominant, others as accents.',label:['Base','Tetradic 1','Tetradic 2','Tetradic 3']},
+  monochromatic:{offsets:[],desc:'Five shades and tints of the same hue. Creates cohesive, elegant palettes — perfect for backgrounds, surfaces, and text hierarchy within a single color family.',label:['Darkest','Dark','Base','Light','Lightest']},
 };
 
 function hslToHex(h,s,l){
@@ -2760,54 +2762,87 @@ function initHarmonyWheel(){
   renderHarmonySwatches();
 }
 
+function hslToRgb(h,s,l){
+  s/=100;l/=100;
+  const k=n=>(n+h/30)%12;
+  const a=s*Math.min(l,1-l);
+  const f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));
+  return[Math.round(f(0)*255),Math.round(f(8)*255),Math.round(f(4)*255)];
+}
+
 function drawHarmonyWheel(ctx,W,H,baseHue){
   const cx=W/2,cy=H/2,r=W/2-10;
   ctx.clearRect(0,0,W,H);
-  // Draw wheel
-  for(let angle=0;angle<360;angle++){
-    const rad1=(angle-90)*Math.PI/180;
-    const rad2=(angle-89)*Math.PI/180;
-    const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-    grad.addColorStop(0,`hsla(${angle},0%,50%,0)`);
-    grad.addColorStop(0.3,`hsla(${angle},60%,50%,0.7)`);
-    grad.addColorStop(1,`hsla(${angle},100%,50%,1)`);
-    ctx.beginPath();
-    ctx.moveTo(cx,cy);
-    ctx.arc(cx,cy,r,rad1,rad2);
-    ctx.closePath();
-    ctx.fillStyle=grad;
-    ctx.fill();
+
+  // Pixel-perfect wheel: iterate every pixel, compute hue+saturation from polar coords
+  const imageData=ctx.createImageData(W,H);
+  const data=imageData.data;
+  for(let py=0;py<H;py++){
+    for(let px=0;px<W;px++){
+      const dx=px-cx,dy=py-cy;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist>r){continue;}
+      // hue from angle (0° = top = red)
+      let hue=Math.atan2(dy,dx)*180/Math.PI+90;
+      if(hue<0)hue+=360;
+      // saturation: 0 at center, 1 at edge
+      const sat=Math.min(dist/r,1);
+      // blend: full color at edge, white at center, dark at very center
+      const innerEdge=r*0.18;
+      const [rC,gC,bC]=hslToRgb(hue,sat*100,50);
+      // white blend for low saturation zone
+      const wMix=Math.max(0,1-sat/0.55);
+      let rr=rC+(255-rC)*wMix;
+      let gg=gC+(255-gC)*wMix;
+      let bb=bC+(255-bC)*wMix;
+      // dark core blend
+      const dMix=Math.max(0,1-dist/innerEdge);
+      rr=rr*(1-dMix)+11*dMix;
+      gg=gg*(1-dMix)+18*dMix;
+      bb=bb*(1-dMix)+32*dMix;
+      // smooth circular edge anti-alias
+      const alpha=dist>r-1.5?Math.round((r-dist)/1.5*255):255;
+      const idx=(py*W+px)*4;
+      data[idx]=rr;data[idx+1]=gg;data[idx+2]=bb;data[idx+3]=alpha;
+    }
   }
-  // Overlay darken center
-  const centerGrad=ctx.createRadialGradient(cx,cy,0,cx,cy,r*0.3);
-  centerGrad.addColorStop(0,'rgba(11,18,32,0.9)');
-  centerGrad.addColorStop(1,'rgba(11,18,32,0)');
-  ctx.fillStyle=centerGrad;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+  ctx.putImageData(imageData,0,0);
 
   // Draw harmony lines
   const info=HARMONY_INFO[harmonyMode];
-  const allHues=[baseHue,...info.offsets.map(o=>(baseHue+o+360)%360)];
-  ctx.strokeStyle='rgba(255,255,255,0.55)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
-  ctx.beginPath();
-  allHues.forEach((h,i)=>{
-    const rad=(h-90)*Math.PI/180;
-    const x=cx+Math.cos(rad)*r*0.7;
-    const y=cy+Math.sin(rad)*r*0.7;
-    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-  });
-  if(allHues.length>2)ctx.closePath();
-  ctx.stroke();ctx.setLineDash([]);
+  if(harmonyMode==='monochromatic'){
+    // For monochromatic: draw a single dot at the base hue position, no lines
+    const rad=(baseHue-90)*Math.PI/180;
+    const px=cx+Math.cos(rad)*r*0.82;
+    const py=cy+Math.sin(rad)*r*0.82;
+    ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.fill();
+    ctx.beginPath();ctx.arc(px,py,7,0,Math.PI*2);
+    ctx.fillStyle=`hsl(${baseHue},90%,55%)`;ctx.fill();
+  } else {
+    const allHues=[baseHue,...info.offsets.map(o=>(baseHue+o+360)%360)];
+    ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    allHues.forEach((h,i)=>{
+      const rad=(h-90)*Math.PI/180;
+      const x=cx+Math.cos(rad)*r*0.75;
+      const y=cy+Math.sin(rad)*r*0.75;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    });
+    if(allHues.length>2)ctx.closePath();
+    ctx.stroke();ctx.setLineDash([]);
 
-  // Draw dots
-  allHues.forEach((h,i)=>{
-    const rad=(h-90)*Math.PI/180;
-    const x=cx+Math.cos(rad)*r*0.82;
-    const y=cy+Math.sin(rad)*r*0.82;
-    ctx.beginPath();ctx.arc(x,y,i===0?9:7,0,Math.PI*2);
-    ctx.fillStyle=i===0?'#fff':'rgba(255,255,255,0.7)';ctx.fill();
-    ctx.beginPath();ctx.arc(x,y,i===0?7:5,0,Math.PI*2);
-    ctx.fillStyle=`hsl(${h},90%,55%)`;ctx.fill();
-  });
+    // Draw dots
+    allHues.forEach((h,i)=>{
+      const rad=(h-90)*Math.PI/180;
+      const x=cx+Math.cos(rad)*r*0.82;
+      const y=cy+Math.sin(rad)*r*0.82;
+      ctx.beginPath();ctx.arc(x,y,i===0?9:7,0,Math.PI*2);
+      ctx.fillStyle=i===0?'#fff':'rgba(255,255,255,0.75)';ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,i===0?7:5,0,Math.PI*2);
+      ctx.fillStyle=`hsl(${h},90%,55%)`;ctx.fill();
+    });
+  }
 }
 
 function setHarmony(mode){
@@ -2821,17 +2856,29 @@ function setHarmony(mode){
 
 function renderHarmonySwatches(){
   const info=HARMONY_INFO[harmonyMode];
-  const allHues=[harmonyHue,...info.offsets.map(o=>(harmonyHue+o+360)%360)];
+  let swatchData=[];
+  if(harmonyMode==='monochromatic'){
+    // Five shades: very dark → dark → base → light → very light
+    const lightnesses=[15,30,50,68,83];
+    const saturations=[70,80,85,75,55];
+    swatchData=lightnesses.map((l,i)=>({
+      hex:hslToHex(harmonyHue,saturations[i],l),
+      label:info.label[i]||('Shade '+(i+1))
+    }));
+  } else {
+    const allHues=[harmonyHue,...info.offsets.map(o=>(harmonyHue+o+360)%360)];
+    swatchData=allHues.map((h,i)=>({
+      hex:hslToHex(h,90,55),
+      label:info.label[i]||('Color '+(i+1))
+    }));
+  }
   const container=document.getElementById('harmonySwatch');
   if(!container)return;
-  container.innerHTML=allHues.map((h,i)=>{
-    const hex=hslToHex(h,90,55);
-    return`<div class="h-swatch" onclick="copyHex('${hex}',this)">
+  container.innerHTML=swatchData.map(({hex,label})=>`<div class="h-swatch" onclick="copyHex('${hex}',this)">
       <div class="h-sw-box" style="background:${hex}"></div>
       <div class="h-sw-hex">${hex}</div>
-      <div class="h-sw-label">${info.label[i]||'Color '+(i+1)}</div>
-    </div>`;
-  }).join('');
+      <div class="h-sw-label">${label}</div>
+    </div>`).join('');
   document.getElementById('harmonyDesc').textContent=info.desc;
 }
 
