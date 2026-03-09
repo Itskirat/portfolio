@@ -900,7 +900,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
 
 <!-- STATS -->
 <div class="stats-row">
-  <div class="stat"><div class="stat-num" data-target="4">0</div><div class="stat-label">Projects Built</div></div>
+  <div class="stat"><div class="stat-num" data-target="5">0</div><div class="stat-label">Projects Built</div></div>
   <div class="stat"><div class="stat-num" data-target="7">0</div><div class="stat-label">Tools Mastered</div></div>
   <div class="stat"><div class="stat-num" data-target="4">0</div><div class="stat-label">Disciplines</div></div>
   <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Ideas in Queue</div></div>
@@ -1131,6 +1131,57 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
         <div class="project-tags"><span class="tag" style="background:rgba(20,184,166,.1);color:#2dd4bf;border-color:rgba(20,184,166,.3)">Mobile App</span><span class="tag blue">Figma</span><span class="tag" style="background:rgba(245,158,11,.12);color:var(--accent);border-color:rgba(245,158,11,.3)">Freelancing</span></div>
         <div class="project-title">Local Mechanic Freelancing App <span style="font-size:13px;color:var(--accent)">— In Progress</span></div>
         <div class="project-desc">A hyperlocal app connecting vehicle owners with nearby independent mechanics. Designed to make finding trusted, affordable auto repair accessible for everyone in the neighbourhood.</div>
+      </div>
+    </div>
+
+    <!-- PROJECT 5: Typography -->
+    <div class="project-card">
+      <div class="project-thumb">
+        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pg5" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0f0f2a"/><stop offset="100%" stop-color="#0B1220"/>
+            </linearGradient>
+            <linearGradient id="tgrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3B82F6"/><stop offset="50%" stop-color="#6366F1"/><stop offset="100%" stop-color="#F59E0B"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="220" fill="url(#pg5)"/>
+          <!-- Big decorative T -->
+          <text x="200" y="155" font-family="Georgia,serif" font-size="160" fill="url(#tgrad)" text-anchor="middle" opacity="0.12">T</text>
+          <!-- Type scale bars -->
+          <text x="36" y="54" font-family="Georgia,serif" font-size="22" fill="rgba(229,231,235,.85)">Aa</text>
+          <text x="36" y="80" font-family="Georgia,serif" font-size="15" fill="rgba(229,231,235,.55)">Bb Cc Dd</text>
+          <text x="36" y="100" font-family="monospace" font-size="10" fill="rgba(148,163,184,.5)">Regular · Bold · Italic</text>
+          <!-- Decorative type scale lines -->
+          <rect x="36" y="112" width="180" height="3" rx="2" fill="url(#tgrad)" opacity=".7"/>
+          <rect x="36" y="122" width="130" height="2" rx="1" fill="rgba(99,102,241,.4)"/>
+          <rect x="36" y="130" width="90"  height="2" rx="1" fill="rgba(59,130,246,.3)"/>
+          <rect x="36" y="138" width="60"  height="2" rx="1" fill="rgba(245,158,11,.25)"/>
+          <!-- Font specimen panel -->
+          <rect x="255" y="30" width="118" height="160" rx="10" fill="rgba(26,35,56,.85)" stroke="rgba(99,102,241,.25)" stroke-width="1"/>
+          <text x="314" y="72"  font-family="Georgia,serif"    font-size="28" fill="rgba(229,231,235,.9)"  text-anchor="middle">Serif</text>
+          <text x="314" y="100" font-family="Arial,sans-serif" font-size="16" fill="rgba(148,163,184,.75)" text-anchor="middle">Sans</text>
+          <text x="314" y="122" font-family="monospace"        font-size="13" fill="rgba(99,102,241,.85)"  text-anchor="middle">Mono</text>
+          <line x1="270" y1="132" x2="358" y2="132" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+          <text x="314" y="152" font-family="Georgia,serif"    font-size="11" fill="rgba(245,158,11,.7)"   text-anchor="middle" font-style="italic">Italic Style</text>
+          <text x="314" y="170" font-family="Arial,sans-serif" font-size="10" fill="rgba(148,163,184,.4)"  text-anchor="middle">Weight · Scale</text>
+          <!-- Bottom label -->
+          <rect x="36" y="158" width="120" height="22" rx="8" fill="rgba(59,130,246,.18)" stroke="rgba(59,130,246,.35)" stroke-width="1"/>
+          <text x="96" y="173" font-family="sans-serif" font-size="9" fill="rgba(59,130,246,.95)" text-anchor="middle" font-weight="bold">Typography Explorer</text>
+        </svg>
+        <div class="project-overlay">
+          <a class="ov-btn solid" href="https://typography-woad.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a>
+          <a class="ov-btn outline" href="https://typography-woad.vercel.app/" target="_blank" rel="noopener">Visit Site</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags"><span class="tag blue">Web</span><span class="tag purple">Design</span><span class="tag" style="background:rgba(245,158,11,.12);color:var(--accent);border-color:rgba(245,158,11,.3)">Typography</span></div>
+        <div class="project-title">Typography</div>
+        <div class="project-desc">An interactive typography explorer showcasing type scales, font pairings, and design principles. A hands-on reference for understanding how typefaces shape visual communication.</div>
+        <div style="margin-top:14px">
+          <a href="https://typography-woad.vercel.app/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--primary);color:#fff;border-radius:8px;font-size:12px;font-family:Syne,sans-serif;font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">🔗 Visit Site ↗</a>
+        </div>
       </div>
     </div>
 
