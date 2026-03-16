@@ -718,6 +718,210 @@ footer{
 }
 .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ─── AI CHAT ASSISTANT ─── */
+.ai-assistant{
+  position:fixed;
+  right:max(20px, env(safe-area-inset-right));
+  bottom:max(20px, calc(env(safe-area-inset-bottom) + 20px));
+  z-index:1900;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:12px;
+  pointer-events:none;
+}
+.ai-assistant.open .ai-panel{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0) scale(1);
+}
+.ai-assistant.open .ai-launch{
+  box-shadow:0 16px 40px rgba(59,130,246,.35);
+}
+.ai-panel{
+  pointer-events:auto;
+  width:min(380px, calc(100vw - 28px));
+  max-height:min(68vh, 560px);
+  display:flex;
+  flex-direction:column;
+  border-radius:20px;
+  border:1px solid rgba(148,163,184,.24);
+  background:linear-gradient(165deg,rgba(17,27,45,.97) 0%,rgba(12,20,36,.98) 100%);
+  box-shadow:0 22px 56px rgba(0,0,0,.5);
+  overflow:hidden;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(18px) scale(.98);
+  transition:opacity .24s ease,transform .24s ease,visibility .24s;
+}
+.ai-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  padding:14px 16px 12px;
+  border-bottom:1px solid rgba(148,163,184,.2);
+  background:rgba(59,130,246,.09);
+}
+.ai-kicker{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--primary);
+  margin-bottom:2px;
+}
+.ai-head h3{
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  letter-spacing:.01em;
+}
+.ai-close{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  border:1px solid rgba(148,163,184,.24);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  cursor:pointer;
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  transition:all .2s;
+}
+.ai-close:hover{
+  border-color:rgba(59,130,246,.38);
+  color:var(--text);
+  background:rgba(59,130,246,.14);
+}
+.ai-messages{
+  flex:1;
+  overflow-y:auto;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.ai-msg{
+  max-width:92%;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:12px;
+  line-height:1.55;
+  border:1px solid transparent;
+  word-break:break-word;
+}
+.ai-msg.bot{
+  align-self:flex-start;
+  background:rgba(59,130,246,.1);
+  border-color:rgba(59,130,246,.24);
+  color:#dbeafe;
+}
+.ai-msg.user{
+  align-self:flex-end;
+  background:rgba(245,158,11,.12);
+  border-color:rgba(245,158,11,.24);
+  color:#ffedd5;
+}
+.ai-msg-typing{
+  letter-spacing:.03em;
+  color:#bfdbfe;
+}
+.ai-quick{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:0 14px 12px;
+}
+.ai-qbtn{
+  border:1px solid rgba(148,163,184,.24);
+  border-radius:999px;
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+  padding:6px 11px;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s;
+}
+.ai-qbtn:hover{
+  background:rgba(59,130,246,.15);
+  border-color:rgba(59,130,246,.34);
+  color:#dbeafe;
+}
+.ai-form{
+  display:flex;
+  gap:8px;
+  padding:12px 14px 14px;
+  border-top:1px solid rgba(148,163,184,.2);
+  background:rgba(11,18,32,.88);
+}
+.ai-input{
+  flex:1;
+  min-width:0;
+  border-radius:10px;
+  border:1px solid rgba(148,163,184,.24);
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  padding:10px 12px;
+  font-size:12px;
+  font-family:'DM Sans',sans-serif;
+  outline:none;
+  transition:border-color .2s,background .2s;
+}
+.ai-input:focus{
+  border-color:rgba(59,130,246,.45);
+  background:rgba(59,130,246,.06);
+}
+.ai-input::placeholder{color:#8aa0bf}
+.ai-send{
+  border:none;
+  border-radius:10px;
+  padding:0 14px;
+  font-size:11px;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  letter-spacing:.03em;
+  color:#0B1220;
+  background:var(--accent);
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s,opacity .2s;
+}
+.ai-send:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(245,158,11,.28);
+}
+.ai-launch{
+  pointer-events:auto;
+  width:62px;
+  height:62px;
+  border-radius:18px;
+  border:1px solid rgba(59,130,246,.35);
+  background:linear-gradient(145deg,#182740,#0f172a);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition:all .24s ease;
+}
+.ai-launch:hover{transform:translateY(-2px)}
+.ai-launch-title{
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  line-height:1;
+}
+.ai-launch-sub{
+  margin-top:4px;
+  font-size:9px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:#9ab6df;
+}
+
 /* ─── LEARN MODE ─── */
 #portfolio-mode,#learn-mode{transition:opacity .4s}
 #learn-mode{display:none}
@@ -1034,6 +1238,11 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
   .software-sub{max-width:100%}
   .software-grid{grid-template-columns:1fr}
 
+  /* AI chatbot */
+  .ai-assistant{right:max(12px, env(safe-area-inset-right));bottom:max(12px, calc(env(safe-area-inset-bottom) + 12px))}
+  .ai-panel{width:min(360px, calc(100vw - 18px));max-height:66vh}
+  .ai-launch{width:58px;height:58px;border-radius:16px}
+
   /* Contact */
   .contact-section{padding:70px 5vw}
   .contact-grid{grid-template-columns:1fr;gap:40px}
@@ -1076,6 +1285,9 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
   nav.scrolled{padding:10px 4vw}
   .section{padding:56px 4vw}
   .software-panel{padding:20px 16px;border-radius:18px}
+  .ai-assistant{left:10px;right:10px;align-items:stretch}
+  .ai-panel{width:100%;max-height:62vh}
+  .ai-launch{align-self:flex-end}
   .contact-section{padding:56px 4vw}
   .contact-form-box{padding:24px 20px}
   .mode-toggle{width:calc(100% - 32px);justify-content:center}
@@ -1860,6 +2072,29 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
 
 <!-- TOAST -->
 <div class="copy-toast" id="copiedToast">Copied!</div>
+
+<!-- AI ASSISTANT -->
+<div class="ai-assistant" id="aiAssistant">
+  <section class="ai-panel" id="aiPanel" aria-hidden="true" aria-label="Portfolio assistant">
+    <div class="ai-head">
+      <div>
+        <p class="ai-kicker">Kirat AI</p>
+        <h3>Ask or control this site</h3>
+      </div>
+      <button type="button" class="ai-close" id="aiCloseBtn" aria-label="Close assistant">X</button>
+    </div>
+    <div class="ai-messages" id="aiMessages"></div>
+    <div class="ai-quick" id="aiQuickActions"></div>
+    <form class="ai-form" id="aiForm">
+      <input class="ai-input" id="aiInput" type="text" placeholder="Ask me anything, or show projects" autocomplete="off">
+      <button class="ai-send" type="submit">Send</button>
+    </form>
+  </section>
+  <button type="button" class="ai-launch" id="aiLaunchBtn" aria-expanded="false" aria-controls="aiPanel" aria-label="Open AI assistant">
+    <span class="ai-launch-title">AI</span>
+    <span class="ai-launch-sub">Guide</span>
+  </button>
+</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ─── INTRO ANIMATION ─── */
@@ -2827,6 +3062,593 @@ function cmClick(key, annEl) {
     }
   });
 }
+
+/* ─── PORTFOLIO AI ASSISTANT ─── */
+(()=>{
+  const assistant = document.getElementById('aiAssistant');
+  const panel = document.getElementById('aiPanel');
+  const launchBtn = document.getElementById('aiLaunchBtn');
+  const closeBtn = document.getElementById('aiCloseBtn');
+  const messages = document.getElementById('aiMessages');
+  const quickWrap = document.getElementById('aiQuickActions');
+  const form = document.getElementById('aiForm');
+  const input = document.getElementById('aiInput');
+  if(!assistant || !panel || !launchBtn || !messages || !quickWrap || !form || !input) return;
+
+  const LINKS = {
+    github: 'https://github.com/Itskirat',
+    linkedin: 'https://www.linkedin.com/in/gurkirat-singh-324b09363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+    email: 'mailto:Singhgurkirat$224@gmail.com'
+  };
+
+  const PROFILE = {
+    name: 'Gurkirat Singh',
+    age: '20',
+    dob: '19/07/2006',
+    dobWords: '19 July 2006',
+    city: 'Dehradun',
+    state: 'Uttarakhand',
+    university: 'UPES',
+    program: 'B.Tech CSE',
+    specialization: 'Graphics and Gaming',
+    hobbies: ['playing games', 'listening to music'],
+    interests: ['traveling', 'bike rides', 'exploring new places', 'writing stories']
+  };
+
+  // Add any extra manual professional facts here.
+  const MANUAL_PROFESSIONAL_FACTS = [
+    {
+      title: 'Professional Focus',
+      keywords: ['professional focus','career goal','goal','objective','future plans'],
+      answer: 'My professional focus is to build strong expertise in game development and creative design, especially where graphics, interaction, and storytelling meet.'
+    },
+    {
+      title: 'Work Style',
+      keywords: ['work style','how do you work','approach','process'],
+      answer: 'I work by combining creativity with practical execution: concept first, then design clarity, then technical implementation and iteration.'
+    }
+  ];
+
+  const quickPrompts = [
+    'Professional Summary',
+    'Your Education',
+    'Your Skills',
+    'Tool Stack',
+    'Show Skills',
+    'Show Projects',
+    'Contact Me',
+    'Start Site Tour'
+  ];
+
+  let tourTimer = null;
+
+  function setOpen(isOpen){
+    assistant.classList.toggle('open', isOpen);
+    launchBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    if(isOpen){
+      setTimeout(()=>input.focus(), 120);
+    }
+  }
+
+  function addMessage(role, text){
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg ' + role;
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addTyping(){
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg bot ai-msg-typing';
+    bubble.textContent = 'Thinking...';
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+    return bubble;
+  }
+
+  function normalize(value){
+    return value.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function tokenize(value){
+    return normalize(value).split(' ').filter(token => token && token.length > 2);
+  }
+
+  function hasAny(text, terms){
+    return terms.some(term => text.includes(term));
+  }
+
+  function uniqueList(items){
+    return [...new Set((items || []).filter(Boolean))];
+  }
+
+  function listNatural(items){
+    if(!items || !items.length) return '';
+    if(items.length === 1) return items[0];
+    if(items.length === 2) return items[0] + ' and ' + items[1];
+    return items.slice(0, -1).join(', ') + ', and ' + items[items.length - 1];
+  }
+
+  function answerProfileQuestion(q){
+    const asksIntro = hasAny(q, ['about you','about yourself','introduce yourself','who are you','tell me about yourself','your name']);
+    if(asksIntro){
+      return 'I am ' + PROFILE.name + ', ' + PROFILE.age + ' years old, from ' + PROFILE.city + ', ' + PROFILE.state + '. I study at ' + PROFILE.university + ' in ' + PROFILE.program + ' with a specialization in ' + PROFILE.specialization + '. My hobbies are ' + listNatural(PROFILE.hobbies) + ', and I also enjoy ' + listNatural(PROFILE.interests) + '.';
+    }
+
+    const asksAge = hasAny(q, ['age','how old','old are you']);
+    if(asksAge){
+      return 'I am ' + PROFILE.age + ' years old.';
+    }
+
+    const asksDob = hasAny(q, ['dob','date of birth','birthday','born']);
+    if(asksDob){
+      return 'My date of birth is ' + PROFILE.dob + ' (' + PROFILE.dobWords + ').';
+    }
+
+    const asksLocation = hasAny(q, ['where are you from','from where','where do you live','location','based']);
+    if(asksLocation){
+      return 'I am from ' + PROFILE.city + ', ' + PROFILE.state + '.';
+    }
+
+    const asksStudy = hasAny(q, ['where do you study','where do you study now','college','university','upes','study','studying','education']);
+    if(asksStudy){
+      return 'I study at ' + PROFILE.university + '.';
+    }
+
+    const asksProgram = hasAny(q, ['btech','cse','course','degree','program','specialisation','specialization','graphics and gaming','graphics']);
+    if(asksProgram){
+      return 'I am pursuing ' + PROFILE.program + ' with specialization in ' + PROFILE.specialization + '.';
+    }
+
+    const asksHobbies = hasAny(q, ['hobby','hobbies','free time','for fun','what do you like to do','what do you do for fun']);
+    if(asksHobbies){
+      return 'My hobbies are ' + listNatural(PROFILE.hobbies) + '. I also love ' + listNatural(PROFILE.interests) + '.';
+    }
+
+    const asksGamesMusic = hasAny(q, ['games','gaming','music','songs']);
+    if(asksGamesMusic){
+      return 'I enjoy playing games and listening to music.';
+    }
+
+    const asksTravel = hasAny(q, ['travel','trip','bike','ride','explore','places']);
+    if(asksTravel){
+      return 'I like to travel, go on bike rides, and explore new places.';
+    }
+
+    const asksWriting = hasAny(q, ['story','stories','write','writing']);
+    if(asksWriting){
+      return 'I like writing stories too, especially in my free time.';
+    }
+
+    return '';
+  }
+
+  function readTextList(selector){
+    const values = Array.from(document.querySelectorAll(selector)).map(el => {
+      return (el.textContent || '').trim();
+    }).filter(Boolean);
+    return uniqueList(values);
+  }
+
+  function readProjects(){
+    return Array.from(document.querySelectorAll('#work .project-card')).map(card => {
+      const title = (card.querySelector('.project-title')?.textContent || '').trim();
+      const desc = (card.querySelector('.project-desc')?.textContent || '').trim();
+      const tags = Array.from(card.querySelectorAll('.project-tags .tag')).map(tag => (tag.textContent || '').trim()).filter(Boolean);
+      const href = card.querySelector('.project-body a[href], .project-overlay a[href]')?.getAttribute('href') || '';
+      return {title, desc, tags, href};
+    }).filter(project => project.title);
+  }
+
+  function readEducationTimeline(){
+    return Array.from(document.querySelectorAll('#experience .timeline .tl-item')).map(item => {
+      const year = (item.querySelector('.tl-year')?.textContent || '').trim();
+      const role = (item.querySelector('.tl-role')?.textContent || '').trim();
+      const detail = (item.querySelector('.tl-desc')?.textContent || '').trim();
+      return {year, role, detail};
+    }).filter(entry => entry.role);
+  }
+
+  function readContactFacts(){
+    const emailRaw = document.querySelector('#contact a[href^="mailto:"]')?.getAttribute('href') || LINKS.email;
+    return {
+      email: emailRaw.replace(/^mailto:/i, ''),
+      github: document.querySelector('#contact a[href*="github.com"]')?.getAttribute('href') || LINKS.github,
+      linkedin: document.querySelector('#contact a[href*="linkedin.com"]')?.getAttribute('href') || LINKS.linkedin
+    };
+  }
+
+  function getWebsiteProfessionalFacts(){
+    return {
+      skills: readTextList('.skill-name'),
+      software: readTextList('.software-name'),
+      projects: readProjects(),
+      education: readEducationTimeline(),
+      contact: readContactFacts()
+    };
+  }
+
+  function buildProfessionalEntries(){
+    const website = getWebsiteProfessionalFacts();
+    const entries = [];
+
+    const summaryAnswer = 'I am ' + PROFILE.name + ', a ' + PROFILE.age + '-year-old student from ' + PROFILE.city + ', ' + PROFILE.state + '. I study at ' + PROFILE.university + ' in ' + PROFILE.program + ' with specialization in ' + PROFILE.specialization + '.';
+    entries.push({
+      keywords: ['professional summary','summary','professional profile','about your work','career'],
+      answer: summaryAnswer,
+      searchText: normalize(summaryAnswer)
+    });
+
+    if(website.skills.length){
+      const answer = 'My core skills are ' + listNatural(website.skills) + '.';
+      entries.push({
+        keywords: ['skills','expertise','strengths','core skills','specialties','specialities'],
+        answer,
+        searchText: normalize(answer + ' ' + website.skills.join(' '))
+      });
+    }
+
+    if(website.software.length){
+      const answer = 'My software stack includes ' + listNatural(website.software) + '.';
+      entries.push({
+        keywords: ['tools','software','stack','tech stack','tool stack','platforms'],
+        answer,
+        searchText: normalize(answer + ' ' + website.software.join(' '))
+      });
+    }
+
+    if(website.projects.length){
+      const topProjects = website.projects.slice(0, 4).map(project => project.title);
+      const answer = 'Some of my key projects are ' + listNatural(topProjects) + '. Ask me about any specific project for details.';
+      entries.push({
+        keywords: ['projects','portfolio','work','case study','case studies','build','built'],
+        answer,
+        searchText: normalize(answer + ' ' + website.projects.map(project => project.title + ' ' + project.desc + ' ' + project.tags.join(' ')).join(' '))
+      });
+
+      website.projects.forEach(project => {
+        const projectAnswer = project.title + ': ' + project.desc + (project.href ? ' Link: ' + project.href : '');
+        const projectKeywords = uniqueList([
+          project.title,
+          ...tokenize(project.title),
+          ...project.tags,
+          ...tokenize(project.desc).slice(0, 12)
+        ]);
+        entries.push({
+          keywords: projectKeywords,
+          answer: projectAnswer,
+          searchText: normalize(project.title + ' ' + project.desc + ' ' + project.tags.join(' '))
+        });
+      });
+    }
+
+    if(website.education.length){
+      const timeline = website.education.map(item => {
+        return (item.year ? item.year + ': ' : '') + item.role;
+      }).join(' | ');
+      const answer = 'My education timeline is: ' + timeline + '.';
+      entries.push({
+        keywords: ['education','academic','timeline','degree','qualification','class 10','class 12','btech','upes'],
+        answer,
+        searchText: normalize(answer + ' ' + website.education.map(item => item.role + ' ' + item.detail).join(' '))
+      });
+    }
+
+    const contactAnswer = 'You can connect with me via email (' + website.contact.email + '), GitHub (' + website.contact.github + '), or LinkedIn (' + website.contact.linkedin + ').';
+    entries.push({
+      keywords: ['contact','reach','email','github','linkedin','connect'],
+      answer: contactAnswer,
+      searchText: normalize(contactAnswer)
+    });
+
+    MANUAL_PROFESSIONAL_FACTS.forEach(fact => {
+      entries.push({
+        keywords: uniqueList([...(fact.keywords || []), fact.title || '']),
+        answer: fact.answer,
+        searchText: normalize((fact.title || '') + ' ' + (fact.answer || '') + ' ' + (fact.keywords || []).join(' '))
+      });
+    });
+
+    return entries;
+  }
+
+  function scoreEntry(query, queryTokens, entry){
+    let score = 0;
+    const keywords = (entry.keywords || []).map(term => normalize(term)).filter(Boolean);
+    keywords.forEach(keyword => {
+      if(query.includes(keyword)){
+        score += Math.max(3, keyword.split(' ').length * 2);
+      }
+    });
+    if(entry.searchText){
+      queryTokens.forEach(token => {
+        if(entry.searchText.includes(token)) score += 1;
+      });
+    }
+    return score;
+  }
+
+  function answerProfessionalQuestion(q){
+    const queryTokens = tokenize(q);
+    if(!queryTokens.length) return '';
+
+    const entries = buildProfessionalEntries();
+    if(!entries.length) return '';
+
+    let best = null;
+    let bestScore = 0;
+
+    entries.forEach(entry => {
+      const entryScore = scoreEntry(q, queryTokens, entry);
+      if(entryScore > bestScore){
+        bestScore = entryScore;
+        best = entry;
+      }
+    });
+
+    if(best && bestScore >= 4){
+      return best.answer;
+    }
+    return '';
+  }
+
+  function goTo(sectionId){
+    const node = document.getElementById(sectionId);
+    if(!node) return false;
+    node.scrollIntoView({behavior:'smooth', block:'start'});
+    return true;
+  }
+
+  function focusContactForm(){
+    const firstInput = document.querySelector('#contact .cf-input');
+    if(firstInput){
+      setTimeout(()=>firstInput.focus(), 550);
+    }
+  }
+
+  function stopTour(){
+    if(tourTimer){
+      clearTimeout(tourTimer);
+      tourTimer = null;
+    }
+  }
+
+  function startTour(){
+    stopTour();
+    const route = ['skills','work','experience','contact'];
+    let idx = 0;
+    const runStep = () => {
+      goTo(route[idx]);
+      idx += 1;
+      if(idx < route.length){
+        tourTimer = setTimeout(runStep, 2200);
+      }else{
+        tourTimer = null;
+      }
+    };
+    runStep();
+  }
+
+  function toggleFx(hide){
+    const particlesLayer = document.getElementById('particles');
+    const gradientLayer = document.getElementById('bg-gradient');
+    if(!particlesLayer || !gradientLayer) return false;
+    particlesLayer.style.transition = 'opacity .35s ease';
+    gradientLayer.style.transition = 'opacity .35s ease';
+    particlesLayer.style.opacity = hide ? '0' : '1';
+    gradientLayer.style.opacity = hide ? '0' : '1';
+    particlesLayer.style.visibility = hide ? 'hidden' : 'visible';
+    gradientLayer.style.visibility = hide ? 'hidden' : 'visible';
+    return true;
+  }
+
+  function canSwitchModes(){
+    return typeof setMode === 'function' &&
+      !!document.getElementById('learn-mode') &&
+      !!document.getElementById('lbl-portfolio') &&
+      !!document.getElementById('lbl-learn');
+  }
+
+  function handlePrompt(rawPrompt){
+    const q = normalize(rawPrompt);
+    if(!q){
+      return 'Write a message and I will help.';
+    }
+
+    if(hasAny(q, ['help','commands','what can you do','control'])){
+      return 'I can answer professional and personal questions using both website data and manual profile facts. I can also control the site: navigate sections, open links, flip the hero orb, control mobile menu, and run a guided tour.';
+    }
+
+    if(hasAny(q, ['hi','hello','hey'])){
+      return 'Hey, I am ' + PROFILE.name + '. Ask me any professional question, and I will answer from my portfolio data and profile.';
+    }
+
+    if(hasAny(q, ['what do you do','services','skills overview'])){
+      return 'I build game development and creative design projects across UI/UX, 3D workflows, and editing pipelines.';
+    }
+
+    if(hasAny(q, ['tools','software','stack'])){
+      return 'I use Blender, Unity, Unreal Engine, Godot, Maya, DaVinci Resolve, Figma, and Photoshop.';
+    }
+
+    if(hasAny(q, ['experience'])){
+      return 'I am currently building depth through real projects and daily practice, and this portfolio tracks that growth.';
+    }
+
+    if(hasAny(q, ['available','freelance','hire','collab'])){
+      goTo('contact');
+      focusContactForm();
+      return 'I am open to collaborations. I moved you to the contact section to start a conversation.';
+    }
+
+    if(hasAny(q, ['start site tour','site tour','website tour','start tour'])){
+      startTour();
+      return 'Starting a quick tour: Skills, Work, Experience, then Contact.';
+    }
+
+    if(hasAny(q, ['stop tour','cancel tour','end tour'])){
+      stopTour();
+      return 'Tour stopped.';
+    }
+
+    if(hasAny(q, ['show projects','go to projects','open projects']) || q === 'projects' || q === 'work'){
+      goTo('work');
+      return 'Taking you to my projects section.';
+    }
+
+    if(hasAny(q, ['show skills','go to skills','open skills']) || q === 'skills'){
+      goTo('skills');
+      return 'Taking you to my skills section.';
+    }
+
+    if(hasAny(q, ['show experience','go to experience','education section','background']) || q === 'experience'){
+      goTo('experience');
+      return 'Taking you to my experience and education section.';
+    }
+
+    if(hasAny(q, ['contact me','go to contact','open contact']) || q === 'contact'){
+      goTo('contact');
+      focusContactForm();
+      return 'Taking you to contact. You can send your message there.';
+    }
+
+    if(hasAny(q, ['go home','back to top','top of page','hero section'])){
+      window.scrollTo({top:0, behavior:'smooth'});
+      return 'Back to the top.';
+    }
+
+    if(hasAny(q, ['open github','github'])){
+      window.open(LINKS.github, '_blank', 'noopener');
+      return 'Opening GitHub profile in a new tab.';
+    }
+
+    if(hasAny(q, ['open linkedin','linkedin'])){
+      window.open(LINKS.linkedin, '_blank', 'noopener');
+      return 'Opening LinkedIn profile in a new tab.';
+    }
+
+    if(hasAny(q, ['email','mail'])){
+      window.location.href = LINKS.email;
+      return 'Opening email so you can write to me directly.';
+    }
+
+    if(hasAny(q, ['flip orb','flip hero','flip profile','flip the orb'])){
+      if(typeof flipOrb === 'function'){
+        flipOrb();
+        return 'Done. I flipped the hero orb.';
+      }
+      return 'Orb control is not available in this layout.';
+    }
+
+    if(hasAny(q, ['open menu','show menu'])){
+      if(typeof toggleMenu === 'function'){
+        toggleMenu(true);
+        return 'Mobile menu opened.';
+      }
+      return 'Menu controls are unavailable right now.';
+    }
+
+    if(hasAny(q, ['close menu','hide menu'])){
+      if(typeof toggleMenu === 'function'){
+        toggleMenu(false);
+        return 'Mobile menu closed.';
+      }
+      return 'Menu controls are unavailable right now.';
+    }
+
+    if(hasAny(q, ['hide effects','disable effects','hide particles','minimal mode'])){
+      if(toggleFx(true)){
+        return 'Background effects hidden for a cleaner reading view.';
+      }
+      return 'Effects controls are unavailable in this layout.';
+    }
+
+    if(hasAny(q, ['show effects','enable effects','show particles','restore effects'])){
+      if(toggleFx(false)){
+        return 'Background effects restored.';
+      }
+      return 'Effects controls are unavailable in this layout.';
+    }
+
+    if(hasAny(q, ['learn mode','switch to learn'])){
+      if(canSwitchModes()){
+        setMode('learn');
+        return 'Switched to learn mode.';
+      }
+      return 'Learn mode is not enabled in this version yet.';
+    }
+
+    if(hasAny(q, ['portfolio mode','switch to portfolio'])){
+      if(canSwitchModes()){
+        setMode('portfolio');
+        return 'Switched to portfolio mode.';
+      }
+      return 'Portfolio mode switch is not enabled in this version.';
+    }
+
+    const profileReply = answerProfileQuestion(q);
+    if(profileReply){
+      return profileReply;
+    }
+
+    const professionalReply = answerProfessionalQuestion(q);
+    if(professionalReply){
+      return professionalReply;
+    }
+
+    return 'I am here as Gurkirat\'s AI voice. I can answer professional questions from my portfolio plus manually added facts. Try asking about skills, tools, projects, education, professional focus, or contact details.';
+  }
+
+  function respond(rawPrompt){
+    const prompt = rawPrompt.trim();
+    if(!prompt) return;
+    addMessage('user', prompt);
+    const typing = addTyping();
+    const reply = handlePrompt(prompt);
+    const wait = 220 + Math.min(prompt.length * 14, 680);
+    setTimeout(()=>{
+      typing.remove();
+      addMessage('bot', reply);
+    }, wait);
+  }
+
+  quickWrap.innerHTML = quickPrompts.map(label => '<button type="button" class="ai-qbtn">' + label + '</button>').join('');
+  quickWrap.querySelectorAll('.ai-qbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setOpen(true);
+      respond(btn.textContent || '');
+      input.value = '';
+    });
+  });
+
+  launchBtn.addEventListener('click', () => setOpen(!assistant.classList.contains('open')));
+  if(closeBtn){
+    closeBtn.addEventListener('click', () => setOpen(false));
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value;
+    input.value = '';
+    respond(text);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && assistant.classList.contains('open')){
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if(!assistant.classList.contains('open')) return;
+    if(assistant.contains(e.target)) return;
+    setOpen(false);
+  });
+
+  addMessage('bot', 'Hi, I am Gurkirat\'s AI assistant. I now answer professional questions using live website info (skills, projects, tools, education) plus manual profile facts, and I can control this website too.');
+})();
 </script>
 </body>
 </html>
