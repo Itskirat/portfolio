@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Gurkirat Singh — Game Dev & Creative Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 /* ─── DESIGN TOKENS ─────────────────────────── */
 :root{
@@ -27,7 +27,62 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body.intro-lock{overflow:hidden}
+#portfolio-mode{transition:transform .35s ease,opacity .35s ease,filter .35s ease}
+body.intro-primed #portfolio-mode{
+  transform:translateY(26px) scale(.985);
+  opacity:.85;
+  filter:blur(2px);
+}
+body.intro-settle #portfolio-mode{animation:introSiteSettle .85s cubic-bezier(.16,1,.3,1) both}
+@keyframes introSiteSettle{
+  0%{transform:translateY(28px) scale(.985);opacity:.85}
+  55%{transform:translateY(-14px) scale(1.01);opacity:1}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
 ::selection{background:var(--accent);color:#0B1220}
+
+/* ─── STARTUP INTRO ─── */
+#intro-overlay{
+  position:fixed;inset:0;z-index:3000;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(245,158,11,.16) 0%, transparent 52%),
+    radial-gradient(circle at 70% 70%, rgba(59,130,246,.1) 0%, transparent 48%),
+    var(--bg);
+  transition:opacity .75s cubic-bezier(.16,1,.3,1),visibility .75s;
+}
+#intro-overlay.hide{opacity:0;visibility:hidden}
+.intro-name{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(54px,12vw,130px);
+  letter-spacing:.03em;
+  color:var(--accent);
+  text-shadow:0 0 22px rgba(245,158,11,.35),0 0 48px rgba(245,158,11,.22);
+  display:inline-flex;align-items:flex-end;gap:.02em;
+  transform-origin:center center;
+  animation:introJumpSettle .95s .1s cubic-bezier(.16,1,.3,1) both;
+}
+.intro-char{
+  opacity:0;
+  transform:translateY(18px) scale(.9);
+  transition:opacity .2s cubic-bezier(.16,1,.3,1), transform .2s cubic-bezier(.16,1,.3,1);
+}
+.intro-char.visible{opacity:1;transform:translateY(0) scale(1)}
+@keyframes introJumpSettle{
+  0%{transform:translateY(36px) scale(.9)}
+  55%{transform:translateY(-12px) scale(1.03)}
+  100%{transform:translateY(0) scale(1)}
+}
+.intro-cursor{
+  width:.08em;height:.95em;margin-left:.08em;
+  border-radius:2px;background:var(--accent);
+  align-self:flex-end;
+  box-shadow:0 0 14px rgba(245,158,11,.6);
+  animation:introCaretBlink .7s steps(1) infinite;
+}
+.intro-cursor.done{opacity:0;transition:opacity .3s ease;animation:none}
+@keyframes introCaretBlink{0%,55%{opacity:1}56%,100%{opacity:0}}
 /* Safe area support for notched phones */
 .contact-section,footer{
   padding-left:max(5vw, env(safe-area-inset-left));
@@ -1056,6 +1111,17 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
 </head>
 <body>
 
+<div id="intro-overlay" aria-hidden="true">
+  <div class="intro-name" id="introName">
+    <span class="intro-char">K</span>
+    <span class="intro-char">i</span>
+    <span class="intro-char">r</span>
+    <span class="intro-char">a</span>
+    <span class="intro-char">t</span>
+    <span class="intro-cursor" id="introCursor"></span>
+  </div>
+</div>
+
 <div id="bg-gradient"></div>
 <canvas id="particles"></canvas>
 
@@ -1681,6 +1747,40 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
 <div class="copy-toast" id="copiedToast">Copied!</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ─── INTRO ANIMATION ─── */
+(()=>{
+  const overlay = document.getElementById('intro-overlay');
+  const name = document.getElementById('introName');
+  const body = document.body;
+  if(!overlay || !name) return;
+
+  const chars = Array.from(name.querySelectorAll('.intro-char'));
+  const cursor = document.getElementById('introCursor');
+  body.classList.add('intro-lock','intro-primed');
+
+  let idx = 0;
+  function typeNext(){
+    if(idx < chars.length){
+      chars[idx].classList.add('visible');
+      idx += 1;
+      setTimeout(typeNext, idx === 1 ? 300 : 120);
+      return;
+    }
+
+    if(cursor) cursor.classList.add('done');
+
+    setTimeout(()=>{
+      overlay.classList.add('hide');
+      body.classList.remove('intro-lock','intro-primed');
+      body.classList.add('intro-settle');
+      setTimeout(()=>body.classList.remove('intro-settle'), 900);
+      setTimeout(()=>overlay.remove(), 800);
+    }, 850);
+  }
+
+  setTimeout(typeNext, 220);
+})();
+
 /* ─── ORB FLIP ─── */
 let orbIsFlipped = true;
 function flipOrb() {
