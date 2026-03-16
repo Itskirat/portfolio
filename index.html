@@ -514,6 +514,109 @@ nav.scrolled{padding:12px 6vw;background:rgba(11,18,32,.98)}
 .tl-co{font-size:14px;color:var(--muted);margin-bottom:10px}
 .tl-desc{font-size:14px;color:var(--muted);line-height:1.65;max-width:500px}
 
+/* SOFTWARE STACK PANEL */
+.software-panel{
+  position:relative;
+  margin-top:32px;
+  padding:26px;
+  border-radius:22px;
+  border:1px solid rgba(148,163,184,.22);
+  background:linear-gradient(160deg,rgba(26,35,56,.96) 0%,rgba(17,27,45,.94) 100%);
+  box-shadow:0 18px 46px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.04);
+  overflow:hidden;
+}
+.software-panel::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,rgba(59,130,246,.45),rgba(99,102,241,.4),rgba(245,158,11,.42));
+}
+.software-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  margin-bottom:18px;
+}
+.software-eyebrow{
+  display:block;
+  margin-bottom:7px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--primary);
+}
+.software-title{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+.software-sub{
+  max-width:280px;
+  font-size:12px;
+  line-height:1.65;
+  color:var(--muted);
+}
+.software-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.software-chip{
+  --sw-color:var(--primary);
+  --sw-tint:rgba(59,130,246,.14);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(148,163,184,.24);
+  background:linear-gradient(135deg,var(--sw-tint) 0%,rgba(255,255,255,.02) 100%);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.software-chip:hover{
+  transform:translateY(-2px);
+  border-color:rgba(229,231,235,.32);
+  box-shadow:0 10px 26px rgba(0,0,0,.32), 0 0 0 1px var(--sw-tint);
+}
+.software-badge{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.04em;
+  color:var(--sw-color);
+  background:var(--sw-tint);
+  border:1px solid rgba(229,231,235,.14);
+}
+.software-name{
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+}
+.software-meta{
+  margin-top:2px;
+  font-size:11px;
+  color:var(--muted);
+}
+.sw-blender{--sw-color:#f59e0b;--sw-tint:rgba(245,158,11,.16)}
+.sw-unity{--sw-color:#8b9cf8;--sw-tint:rgba(99,102,241,.2)}
+.sw-unreal{--sw-color:#7eb1ff;--sw-tint:rgba(59,130,246,.17)}
+.sw-godot{--sw-color:#a5b4fc;--sw-tint:rgba(99,102,241,.17)}
+.sw-maya{--sw-color:#9ca3af;--sw-tint:rgba(148,163,184,.15)}
+.sw-davinci{--sw-color:#4ade80;--sw-tint:rgba(74,222,128,.15)}
+.sw-figma{--sw-color:#93b4ff;--sw-tint:rgba(59,130,246,.16)}
+.sw-photoshop{--sw-color:#f59e0b;--sw-tint:rgba(245,158,11,.14)}
+
 /* CONTACT */
 .contact-section{
   padding:120px 6vw;
@@ -926,6 +1029,11 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
     display:block!important;
   }
 
+  /* Software stack */
+  .software-head{flex-direction:column;align-items:flex-start;gap:10px}
+  .software-sub{max-width:100%}
+  .software-grid{grid-template-columns:1fr}
+
   /* Contact */
   .contact-section{padding:70px 5vw}
   .contact-grid{grid-template-columns:1fr;gap:40px}
@@ -967,6 +1075,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
   nav{padding:14px 4vw}
   nav.scrolled{padding:10px 4vw}
   .section{padding:56px 4vw}
+  .software-panel{padding:20px 16px;border-radius:18px}
   .contact-section{padding:56px 4vw}
   .contact-form-box{padding:24px 20px}
   .mode-toggle{width:calc(100% - 32px);justify-content:center}
@@ -1646,17 +1755,23 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
         </div>
       </div>
 
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;margin-top:32px">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:16px">Software I Use</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px">
-          <span style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);padding:6px 14px;border-radius:20px;font-size:12px;color:var(--accent)">Blender</span>
-          <span style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:20px;font-size:12px;color:#a5b4fc">Unity</span>
-          <span style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);padding:6px 14px;border-radius:20px;font-size:12px;color:#93B4FF">Unreal Engine</span>
-          <span style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);padding:6px 14px;border-radius:20px;font-size:12px;color:#a5b4fc">Godot</span>
-          <span style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:6px 14px;border-radius:20px;font-size:12px;color:var(--muted)">Maya</span>
-          <span style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);padding:6px 14px;border-radius:20px;font-size:12px;color:#4ade80">DaVinci Resolve</span>
-          <span style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);padding:6px 14px;border-radius:20px;font-size:12px;color:#93B4FF">Figma</span>
-          <span style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);padding:6px 14px;border-radius:20px;font-size:12px;color:var(--accent)">Photoshop</span>
+      <div class="software-panel">
+        <div class="software-head">
+          <div>
+            <span class="software-eyebrow">Tool Stack</span>
+            <div class="software-title">Software I Use</div>
+          </div>
+          <p class="software-sub">Daily toolkit for game development, design workflows, 3D production, and editing.</p>
+        </div>
+        <div class="software-grid">
+          <div class="software-chip sw-blender"><div class="software-badge">BL</div><div><div class="software-name">Blender</div><div class="software-meta">3D Modeling</div></div></div>
+          <div class="software-chip sw-unity"><div class="software-badge">UN</div><div><div class="software-name">Unity</div><div class="software-meta">Real-Time Game Dev</div></div></div>
+          <div class="software-chip sw-unreal"><div class="software-badge">UE</div><div><div class="software-name">Unreal Engine</div><div class="software-meta">Cinematic Scenes</div></div></div>
+          <div class="software-chip sw-godot"><div class="software-badge">GD</div><div><div class="software-name">Godot</div><div class="software-meta">Indie Prototyping</div></div></div>
+          <div class="software-chip sw-maya"><div class="software-badge">MY</div><div><div class="software-name">Maya</div><div class="software-meta">Animation Pipeline</div></div></div>
+          <div class="software-chip sw-davinci"><div class="software-badge">DV</div><div><div class="software-name">DaVinci Resolve</div><div class="software-meta">Color + Editing</div></div></div>
+          <div class="software-chip sw-figma"><div class="software-badge">FG</div><div><div class="software-name">Figma</div><div class="software-meta">UI/UX Design</div></div></div>
+          <div class="software-chip sw-photoshop"><div class="software-badge">PS</div><div><div class="software-name">Photoshop</div><div class="software-meta">Visual Compositing</div></div></div>
         </div>
       </div>
     </div>
